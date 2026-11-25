@@ -8,6 +8,10 @@ app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect("mongodb://127.0.0.1:27017/myData").then(() => {
     console.log("mongodb connect");
+
+    app.listen(3000, () => {
+        console.log("server running");
+    });
 }).catch((error) => {
     console.log("server error", error);
 });
@@ -28,6 +32,7 @@ app.get("/", (req, res) => {
 
 app.post("/AddMovie", async (req, res) => {
     const Data = await movie.create(req.body);
+
     res.json({
         msg: "Movie added",
         data: Data
@@ -36,6 +41,7 @@ app.post("/AddMovie", async (req, res) => {
 
 app.get("/GetAllMovies", async (req, res) => {
     const Data = await movie.find();
+
     res.json({
         msg: "Movies found",
         data: Data
@@ -90,8 +96,3 @@ app.delete("/DeleteMovie", async (req, res) => {
         data: Data
     });
 });
-
-app.listen(3000);
-
-
-
